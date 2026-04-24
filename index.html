@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Froster - Limpieza y Sanitización con Vapor</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #0077D9;
+            --light-blue: #00B4FF;
+            --dark-blue: #1a2d47;
+            --green: #7CBF2E;
+            --bg-dark: #0f1419;
+            --light: #f8f9fa;
+            --text: #2a2a2a;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* HEADER */
+        header {
+            background: linear-gradient(135deg, #1a2d47 0%, #0f1f32 100%);
+            color: white;
+            padding: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+        }
+
+        .logo svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .brand-name h1 {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .brand-name p {
+            font-size: 12px;
+            opacity: 0.9;
+            margin-top: -5px;
+        }
+
+        .whatsapp-btn {
+            background: white;
+            color: #1a2d47;
+            padding: 8px 16px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            border: none;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .whatsapp-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* HERO */
+        .hero {
+            background: linear-gradient(135deg, var(--dark-blue) 0%, #0a1628 100%);
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .hero-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero h2 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--light-blue) 0%, var(--green) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: #d0d0d0;
+            margin-bottom: 30px;
+            line-height: 1.8;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--light-blue) 100%);
+            color: white;
+            padding: 15px 40px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 119, 217, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 119, 217, 0.4);
+        }
+
+        /* GALERÍA */
+        .gallery {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
+        .gallery h3 {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 40px;
+            color: var(--primary-blue);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #e8e8e8 0%, #f5f5f5 100%);
+            color: var(--primary-blue);
+            font-weight: bold;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.03);
+        }
+
+        /* SERVICIOS */
+        .services {
+            background: var(--light);
+            padding: 60px 20px;
+        }
+
+        .services-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .services h3 {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 40px;
+            color: var(--primary-blue);
+        }
+
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .service-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border-top: 4px solid var(--primary-blue);
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 119, 217, 0.15);
+        }
+
+        .service-card h4 {
+            color: var(--primary-blue);
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .service-card p {
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* PRECIOS */
+        .pricing {
+            padding: 60px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .pricing h3 {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 40px;
+            color: var(--primary-blue);
+        }
+
+        .pricing-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .pricing-table thead {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--light-blue) 100%);
+            color: white;
+        }
+
+        .pricing-table th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .pricing-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .pricing-table tbody tr:hover {
+            background: #f8f9fa;
+        }
+
+        .pricing-table .price {
+            color: var(--primary-blue);
+            font-weight: 600;
+        }
+
+        /* BENEFICIOS */
+        .benefits {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--light-blue) 100%);
+            color: white;
+            padding: 60px 20px;
+        }
+
+        .benefits-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .benefits h3 {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 40px;
+        }
+
+        .benefits-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .benefit-item {
+            display: flex;
+            gap: 15px;
+        }
+
+        .benefit-icon {
+            font-size: 28px;
+            flex-shrink: 0;
+        }
+
+        .benefit-item h4 {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .benefit-item p {
+            font-size: 14px;
+            opacity: 0.95;
+        }
+
+        /* CONTACTO */
+        .contact {
+            padding: 60px 20px;
+            text-align: center;
+            background: var(--light);
+        }
+
+        .contact-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .contact h3 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: var(--primary-blue);
+        }
+
+        .contact p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            color: #666;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 16px;
+        }
+
+        .info-item strong {
+            color: var(--primary-blue);
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--bg-dark);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 14px;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .hero h2 {
+                font-size: 32px;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pricing-table {
+                font-size: 14px;
+            }
+
+            .pricing-table th, .pricing-table td {
+                padding: 10px;
+            }
+        }
+
+        /* ANIMACIONES */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .gallery-item, .service-card, .benefit-item {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .gallery-item:nth-child(1) { animation-delay: 0.1s; }
+        .gallery-item:nth-child(2) { animation-delay: 0.2s; }
+        .gallery-item:nth-child(3) { animation-delay: 0.3s; }
+        .gallery-item:nth-child(4) { animation-delay: 0.4s; }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="header-container">
+            <div class="logo-section">
+                <div class="logo">
+                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAB1QAAAc4CAYAAACPwfTtAAAAkmVYSWZNTQAqAAAACAAEAQAAAwAA/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWm5ybnJ2eoaKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlbaWmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD9/KKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigD/2Q==" alt="Froster Logo" style="width: 100%; height: 100%; object-fit: contain;">
+                </div>
+                <div class="brand-name">
+                    <h1>FROSTER</h1>
+                    <p>Limpieza y Sanitización con Vapor</p>
+                </div>
+            </div>
+            <a href="https://wa.me/56997550446?text=Hola%20Froster%21%20Me%20interesa%20conocer%20m%C3%A1s%20sobre%20sus%20servicios" class="whatsapp-btn" target="_blank">
+                💬 WhatsApp
+            </a>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-container">
+            <h2>Limpieza Profunda con Vapor</h2>
+            <p>Elimina virus, bacterias, ácaros y malos olores de tus muebles, colchones y alfombras en Villarrica, Pucón y alrededores.</p>
+            <a href="https://wa.me/56997550446?text=Hola%20Froster%21%20Me%20interesa%20agendar%20un%20servicio" class="cta-button" target="_blank">
+                📞 Agendar Ahora por WhatsApp
+            </a>
+        </div>
+    </section>
+
+    <!-- GALERÍA -->
+    <section class="gallery">
+        <h3>✨ Transformaciones Reales ✨</h3>
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                👉 Silla Roja Sucia<br>⬅️ Silla Roja Limpia
+            </div>
+            <div class="gallery-item">
+                👉 Colchón Sucio<br>⬅️ Colchón Impecable
+            </div>
+            <div class="gallery-item">
+                👉 Sillón Rojo Manchado<br>⬅️ Sillón Impecable
+            </div>
+            <div class="gallery-item">
+                👉 Colchón Manchado<br>⬅️ Colchón Limpio
+            </div>
+        </div>
+        <div style="text-align: center; padding: 20px; background: #f0f8ff; border-radius: 10px;">
+            <p style="color: var(--primary-blue); font-weight: 600; margin: 0;">📸 Sube tus fotos antes/después en nuestro Instagram @frosterspa</p>
+        </div>
+    </section>
+
+    <!-- SERVICIOS -->
+    <section class="services">
+        <div class="services-container">
+            <h3>Nuestros Servicios</h3>
+            <div class="service-grid">
+                <div class="service-card">
+                    <h4>🛏️ Colchones</h4>
+                    <p>Desde $16.000<br>Limpieza y Sanitización</p>
+                </div>
+                <div class="service-card">
+                    <h4>🪑 Sillas</h4>
+                    <p>Desde $5.000<br>Limpieza y Sanitización</p>
+                </div>
+                <div class="service-card">
+                    <h4>🛋️ Sillones</h4>
+                    <p>Desde $19.000<br>Limpieza y Sanitización</p>
+                </div>
+                <div class="service-card">
+                    <h4>🏠 Alfombras</h4>
+                    <p>Desde $3.000/m²<br>Limpieza y Sanitización</p>
+                </div>
+                <div class="service-card">
+                    <h4>🚗 Autos</h4>
+                    <p>Desde $49.000<br>Limpieza y Sanitización</p>
+                </div>
+                <div class="service-card">
+                    <h4>📞 Consulta Personalizada</h4>
+                    <p>Presupuesto sin costo<br>Adaptamos a tu necesidad</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRECIOS -->
+    <section class="pricing">
+        <h3>Tabla de Precios - Temporada Baja</h3>
+        <div style="overflow-x: auto;">
+            <table class="pricing-table">
+                <thead>
+                    <tr>
+                        <th>Servicio</th>
+                        <th>Descripción</th>
+                        <th class="price">Precio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="3" style="background: #f0f0f0; font-weight: 600;">🛏️ COLCHONES</td>
+                    </tr>
+                    <tr>
+                        <td>1 Plaza</td>
+                        <td>Limpieza estándar</td>
+                        <td class="price">$16.000</td>
+                    </tr>
+                    <tr>
+                        <td>1.5 Plaza</td>
+                        <td>Limpieza estándar</td>
+                        <td class="price">$19.000</td>
+                    </tr>
+                    <tr>
+                        <td>2 Plazas</td>
+                        <td>Limpieza estándar</td>
+                        <td class="price">$25.000</td>
+                    </tr>
+                    <tr>
+                        <td>King</td>
+                        <td>Limpieza estándar</td>
+                        <td class="price">$29.000</td>
+                    </tr>
+                    <tr>
+                        <td>Super King / Queen</td>
+                        <td>Limpieza estándar</td>
+                        <td class="price">$30.000</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" style="background: #f0f0f0; font-weight: 600;">🪑 SILLAS</td>
+                    </tr>
+                    <tr>
+                        <td>Base</td>
+                        <td>Limpieza y Sanitización</td>
+                        <td class="price">$5.000</td>
+                    </tr>
+                    <tr>
+                        <td>Base + Respaldo</td>
+                        <td>Limpieza y Sanitización</td>
+                        <td class="price">$7.000</td>
+                    </tr>
+                    <tr>
+                        <td>Sitial / Poltrona</td>
+                        <td>Limpieza y Sanitización</td>
+                        <td class="price">$12.000</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" style="background: #f0f0f0; font-weight: 600;">🛋️ SILLONES</td>
+                    </tr>
+                    <tr>
+                        <td>Futón</td>
+                        <td>Limpieza y Sanitización</td>
+                        <td class="price">$25.000</td>
+                    </tr>
+                    <tr>
+                        <td>1 Cuerpo</td>
+                        <td>Limpieza y Sanitización</td>
+                        <td class="price">$19.000</td>
+                    </tr>
+                    <tr>
+                        <td>2 Cuerpos</td>
+                        <td>Limpieza y Sanitización</td>
+                        <td class="price">$29.000</td>
+                    </tr>
+                    <tr>
+                        <td>3 Cuerpos</td>
+                        <td>Limpieza y Sanitización</td>
+                        <td class="price">$33.000</td>
+                    </tr>
+                    <tr>
+                        <td>Sillón L (desde)</td>
+                        <td>Limpieza y Sanitización</td>
+                        <td class="price">$40.000</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" style="background: #f0f0f0; font-weight: 600;">🏠 ALFOMBRAS</td>
+                    </tr>
+                    <tr>
+                        <td>Cubre Piso</td>
+                        <td>Por m²</td>
+                        <td class="price">$3.000</td>
+                    </tr>
+                    <tr>
+                        <td>Decorativas Pequeñas</td>
+                        <td>Retiro y entrega gratuito</td>
+                        <td class="price">$10.000</td>
+                    </tr>
+                    <tr>
+                        <td>Decorativas</td>
+                        <td>1.2 x 1.6 m</td>
+                        <td class="price">$17.000</td>
+                    </tr>
+                    <tr>
+                        <td>Decorativas</td>
+                        <td>1.6 x 2.2 m</td>
+                        <td class="price">$23.000</td>
+                    </tr>
+                    <tr>
+                        <td>Decorativas</td>
+                        <td>2 x 3 m</td>
+                        <td class="price">$27.000</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" style="background: #f0f0f0; font-weight: 600;">🚗 AUTOS</td>
+                    </tr>
+                    <tr>
+                        <td>Limpieza Tapiz</td>
+                        <td>5 pasajeros (City Car)</td>
+                        <td class="price">$49.000</td>
+                    </tr>
+                    <tr>
+                        <td>Limpieza Tapiz</td>
+                        <td>5 pasajeros (SUV)</td>
+                        <td class="price">$54.000</td>
+                    </tr>
+                    <tr>
+                        <td>Limpieza Tapiz</td>
+                        <td>8 pasajeros (3 filas asientos)</td>
+                        <td class="price">$65.000</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- BENEFICIOS -->
+    <section class="benefits">
+        <div class="benefits-container">
+            <h3>¿Por qué elegir Froster?</h3>
+            <div class="benefits-list">
+                <div class="benefit-item">
+                    <div class="benefit-icon">🌡️</div>
+                    <div>
+                        <h4>Vapor de Alta Temperatura</h4>
+                        <p>Elimina virus, bacterias, hongos y ácaros efectivamente</p>
+                    </div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">🌿</div>
+                    <div>
+                        <h4>Detergentes Biodegradables</h4>
+                        <p>Seguros para tu familia y el medio ambiente</p>
+                    </div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">🐾</div>
+                    <div>
+                        <h4>Tratamiento de Orina</h4>
+                        <p>Especial para eliminar olores de mascotas</p>
+                    </div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">🚗</div>
+                    <div>
+                        <h4>Servicio a Domicilio</h4>
+                        <p>Villarrica, Pucón, Lican Ray y alrededores</p>
+                    </div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">✅</div>
+                    <div>
+                        <h4>Garantía de Satisfacción</h4>
+                        <p>3-4 años de experiencia probada</p>
+                    </div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">💰</div>
+                    <div>
+                        <h4>Presupuestos Gratis</h4>
+                        <p>Sin compromiso, sin sorpresas</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACTO -->
+    <section class="contact">
+        <div class="contact-container">
+            <h3>¿Listo para Limpiar tus Muebles?</h3>
+            <p>Contáctanos hoy y obtén un presupuesto gratis</p>
+            <div class="contact-info">
+                <div class="info-item">
+                    <span>📱</span>
+                    <strong>WhatsApp:</strong> +56 9 97550446
+                </div>
+                <div class="info-item">
+                    <span>📍</span>
+                    <strong>Cobertura:</strong> Villarrica, Pucón, Lican Ray
+                </div>
+                <div class="info-item">
+                    <span>📸</span>
+                    <strong>Instagram:</strong> @frosterspa
+                </div>
+            </div>
+            <a href="https://wa.me/56997550446?text=Hola%20Froster%21%20Me%20interesa%20agendar%20un%20servicio" class="cta-button" target="_blank">
+                📞 Agendar por WhatsApp
+            </a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2026 Froster - Limpieza y Sanitización con Vapor | Todos los derechos reservados</p>
+    </footer>
+</body>
+</html>
