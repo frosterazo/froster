@@ -1,0 +1,1515 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Froster Spa – Limpieza y Sanitización con Vapor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue-deep: #0a1628;
+    --blue-primary: #0d6efd;
+    --blue-bright: #00aaff;
+    --blue-glow: #3dd6f5;
+    --green-fresh: #4caf50;
+    --green-leaf: #81c784;
+    --white: #ffffff;
+    --off-white: #f0f7ff;
+    --gray-soft: #8ca0b8;
+    --surface: #0e1f3a;
+    --surface-card: #112240;
+    --border: rgba(0,170,255,0.18);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--blue-deep);
+    color: var(--white);
+    overflow-x: hidden;
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--blue-deep); }
+  ::-webkit-scrollbar-thumb { background: var(--blue-bright); border-radius: 3px; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    padding: 18px 5%;
+    display: flex; align-items: center; justify-content: space-between;
+    background: rgba(10,22,40,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    transition: all 0.3s;
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 10px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.5rem; font-weight: 800;
+    letter-spacing: -0.5px;
+    text-decoration: none;
+  }
+  .nav-logo img {
+    width: 52px; height: 52px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 10px rgba(0,170,255,0.5));
+    transition: filter 0.3s;
+  }
+  .nav-logo:hover img { filter: drop-shadow(0 0 18px rgba(0,170,255,0.8)); }
+  .nav-logo span { color: var(--blue-glow); }
+  .nav-logo small { font-size: 0.7rem; color: var(--green-leaf); font-weight: 500; letter-spacing: 2px; display: block; margin-top: -4px; }
+  .nav-links {
+    display: flex; gap: 32px; list-style: none;
+  }
+  .nav-links a {
+    color: var(--gray-soft); text-decoration: none; font-size: 0.9rem;
+    font-weight: 500; letter-spacing: 0.3px;
+    transition: color 0.3s; position: relative;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -4px; left: 0;
+    width: 0; height: 2px;
+    background: var(--blue-bright);
+    transition: width 0.3s;
+  }
+  .nav-links a:hover { color: var(--white); }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-cta {
+    background: linear-gradient(135deg, var(--blue-bright), #0056d6);
+    color: white !important; padding: 10px 22px;
+    border-radius: 50px; font-weight: 600; font-size: 0.85rem !important;
+    letter-spacing: 0.5px; box-shadow: 0 4px 20px rgba(0,170,255,0.35);
+    transition: transform 0.3s, box-shadow 0.3s !important;
+  }
+  .nav-cta::after { display: none !important; }
+  .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,170,255,0.5) !important; }
+
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+  .hamburger span { display: block; width: 24px; height: 2px; background: var(--white); transition: all 0.3s; }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    position: relative; overflow: hidden;
+    padding: 120px 5% 80px;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background: linear-gradient(135deg, #020d1f 0%, #061530 40%, #0a2040 70%, #051020 100%);
+  }
+
+  .hero-grid {
+    position: absolute; inset: 0; z-index: 1;
+    background-image:
+      linear-gradient(rgba(0,170,255,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,170,255,0.05) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
+  }
+
+  .hero-orb-1 {
+    position: absolute; width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(0,170,255,0.15) 0%, transparent 70%);
+    top: -100px; right: -100px; z-index: 1;
+    animation: float 8s ease-in-out infinite;
+  }
+  .hero-orb-2 {
+    position: absolute; width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(76,175,80,0.12) 0%, transparent 70%);
+    bottom: 0; left: 10%; z-index: 1;
+    animation: float 10s ease-in-out infinite reverse;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px) scale(1); }
+    50% { transform: translateY(-30px) scale(1.05); }
+  }
+
+  .hero-content {
+    position: relative; z-index: 2;
+    max-width: 650px;
+  }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(0,170,255,0.12); border: 1px solid rgba(0,170,255,0.3);
+    padding: 8px 16px; border-radius: 50px;
+    font-size: 0.8rem; letter-spacing: 1.5px; font-weight: 600;
+    color: var(--blue-glow); text-transform: uppercase; margin-bottom: 28px;
+    animation: fadeInUp 0.8s ease forwards;
+  }
+  .hero-badge::before { content: '❄'; font-size: 0.9rem; }
+
+  .hero-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    font-weight: 900;
+    line-height: 1.05;
+    margin-bottom: 24px;
+    animation: fadeInUp 0.8s 0.15s ease forwards; opacity: 0;
+  }
+  .hero-title .accent { color: var(--blue-bright); }
+  .hero-title .green { color: var(--green-fresh); }
+
+  .hero-subtitle {
+    font-size: 1.15rem; color: var(--gray-soft);
+    line-height: 1.7; max-width: 520px;
+    margin-bottom: 40px;
+    animation: fadeInUp 0.8s 0.3s ease forwards; opacity: 0;
+  }
+
+  .hero-actions {
+    display: flex; gap: 16px; flex-wrap: wrap;
+    animation: fadeInUp 0.8s 0.45s ease forwards; opacity: 0;
+  }
+
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: linear-gradient(135deg, #00b4d8, #0077b6);
+    color: white; padding: 16px 34px;
+    border-radius: 50px; font-weight: 700; font-size: 1rem;
+    text-decoration: none; letter-spacing: 0.3px;
+    box-shadow: 0 8px 40px rgba(0,170,255,0.4);
+    transition: all 0.3s; border: none; cursor: pointer;
+  }
+  .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 14px 50px rgba(0,170,255,0.55); }
+
+  .btn-secondary {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: transparent;
+    color: white; padding: 16px 34px;
+    border-radius: 50px; font-weight: 600; font-size: 1rem;
+    text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.25);
+    transition: all 0.3s; cursor: pointer;
+  }
+  .btn-secondary:hover { border-color: var(--blue-bright); background: rgba(0,170,255,0.08); }
+
+  .hero-stats {
+    display: flex; gap: 40px; margin-top: 60px;
+    animation: fadeInUp 0.8s 0.6s ease forwards; opacity: 0;
+  }
+  .stat-item { text-align: center; }
+  .stat-num {
+    font-family: 'Outfit', sans-serif; font-size: 2rem; font-weight: 800;
+    color: var(--blue-bright);
+  }
+  .stat-label { font-size: 0.78rem; color: var(--gray-soft); letter-spacing: 0.5px; margin-top: 2px; }
+
+  .hero-visual {
+    position: absolute; right: 5%; top: 50%; transform: translateY(-50%);
+    z-index: 2; width: min(500px, 45vw);
+    animation: fadeInRight 1s 0.5s ease forwards; opacity: 0;
+  }
+
+  .hero-visual-card {
+    background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+    border: 1px solid rgba(0,170,255,0.2);
+    border-radius: 24px;
+    padding: 32px;
+    backdrop-filter: blur(20px);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-visual-card::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(0,170,255,0.08), transparent 60%);
+    border-radius: inherit;
+  }
+
+  .big-snowflake {
+    font-size: 8rem; text-align: center; display: block;
+    filter: drop-shadow(0 0 30px rgba(0,170,255,0.6));
+    animation: spin-slow 20s linear infinite;
+    line-height: 1.1;
+  }
+  @keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+  .pill-tags {
+    display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; justify-content: center;
+  }
+  .pill-tag {
+    background: rgba(0,170,255,0.15); border: 1px solid rgba(0,170,255,0.25);
+    padding: 6px 14px; border-radius: 50px;
+    font-size: 0.75rem; font-weight: 600; color: var(--blue-glow);
+    letter-spacing: 0.5px;
+  }
+  .pill-tag.green { background: rgba(76,175,80,0.15); border-color: rgba(76,175,80,0.25); color: var(--green-leaf); }
+
+  /* ── ABOUT ── */
+  #about {
+    padding: 120px 5%;
+    position: relative;
+  }
+  .section-label {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 0.75rem; letter-spacing: 3px; font-weight: 700;
+    color: var(--blue-bright); text-transform: uppercase; margin-bottom: 16px;
+  }
+  .section-label::before { content: ''; display: block; width: 24px; height: 2px; background: var(--blue-bright); }
+  .section-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 800; line-height: 1.15; margin-bottom: 20px;
+  }
+  .section-title .accent { color: var(--blue-bright); }
+  .section-title .green { color: var(--green-fresh); }
+
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 80px; align-items: center; margin-top: 60px;
+  }
+
+  .about-text p {
+    color: var(--gray-soft); line-height: 1.8; font-size: 1.05rem; margin-bottom: 20px;
+  }
+  .about-text p strong { color: var(--white); }
+
+  .about-features {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 32px;
+  }
+  .feat-item {
+    display: flex; align-items: flex-start; gap: 12px;
+    background: var(--surface-card);
+    border: 1px solid var(--border);
+    padding: 16px; border-radius: 14px;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .feat-item:hover { border-color: var(--blue-bright); transform: translateY(-2px); }
+  .feat-icon { font-size: 1.5rem; flex-shrink: 0; }
+  .feat-text strong { font-size: 0.9rem; display: block; margin-bottom: 3px; }
+  .feat-text small { color: var(--gray-soft); font-size: 0.78rem; }
+
+  .about-visual {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+  }
+  .about-card {
+    background: var(--surface-card);
+    border: 1px solid var(--border); border-radius: 20px;
+    padding: 28px 20px; text-align: center;
+    transition: all 0.3s; position: relative; overflow: hidden;
+  }
+  .about-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--blue-bright), var(--blue-glow));
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .about-card:hover { transform: translateY(-6px); border-color: rgba(0,170,255,0.4); }
+  .about-card:hover::before { opacity: 1; }
+  .about-card:nth-child(2) { margin-top: 24px; }
+  .about-card:nth-child(4) { margin-top: 24px; }
+  .about-card .icon { font-size: 2.4rem; margin-bottom: 12px; display: block; }
+  .about-card strong { font-family: 'Outfit', sans-serif; font-size: 1rem; display: block; margin-bottom: 8px; }
+  .about-card small { color: var(--gray-soft); font-size: 0.8rem; line-height: 1.5; }
+
+  /* ── SERVICES ── */
+  #services {
+    padding: 120px 5%;
+    background: linear-gradient(180deg, transparent 0%, rgba(0,170,255,0.03) 50%, transparent 100%);
+  }
+
+  .services-header { text-align: center; margin-bottom: 70px; }
+  .services-header .section-label { justify-content: center; }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+  }
+
+  .service-card {
+    background: var(--surface-card);
+    border: 1px solid var(--border);
+    border-radius: 24px; padding: 36px 28px;
+    transition: all 0.4s; position: relative; overflow: hidden;
+    cursor: pointer;
+  }
+  .service-card::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(0,170,255,0.06), transparent);
+    opacity: 0; transition: opacity 0.4s; pointer-events: none;
+  }
+  .service-card:hover { transform: translateY(-8px); border-color: rgba(0,170,255,0.45); box-shadow: 0 20px 60px rgba(0,0,0,0.3), 0 0 40px rgba(0,170,255,0.1); }
+  .service-card:hover::after { opacity: 1; }
+
+  .service-icon-wrap {
+    width: 64px; height: 64px; border-radius: 18px;
+    background: linear-gradient(135deg, rgba(0,170,255,0.2), rgba(0,170,255,0.05));
+    border: 1px solid rgba(0,170,255,0.25);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.8rem; margin-bottom: 24px;
+    transition: all 0.3s;
+  }
+  .service-card:hover .service-icon-wrap {
+    background: linear-gradient(135deg, rgba(0,170,255,0.35), rgba(0,170,255,0.1));
+    box-shadow: 0 0 30px rgba(0,170,255,0.3);
+  }
+
+  .service-card h3 {
+    font-family: 'Outfit', sans-serif; font-size: 1.25rem; font-weight: 700;
+    margin-bottom: 12px;
+  }
+  .service-card p { color: var(--gray-soft); font-size: 0.9rem; line-height: 1.7; }
+
+  .service-tag {
+    display: inline-block; margin-top: 20px;
+    background: rgba(76,175,80,0.12); border: 1px solid rgba(76,175,80,0.25);
+    color: var(--green-leaf); font-size: 0.72rem; font-weight: 700;
+    padding: 4px 12px; border-radius: 50px; letter-spacing: 0.8px;
+  }
+
+  /* ── BENEFITS ── */
+  #benefits { padding: 120px 5%; }
+
+  .benefits-layout {
+    display: grid; grid-template-columns: 1fr 1.4fr; gap: 80px; align-items: center;
+    margin-top: 60px;
+  }
+
+  .benefits-left h2 { margin-bottom: 16px; }
+  .benefits-left p { color: var(--gray-soft); line-height: 1.8; margin-bottom: 32px; }
+
+  .benefits-list {
+    display: flex; flex-direction: column; gap: 16px;
+  }
+  .benefit-item {
+    display: flex; align-items: center; gap: 16px;
+    background: var(--surface-card); border: 1px solid var(--border);
+    padding: 18px 20px; border-radius: 16px;
+    transition: all 0.3s;
+  }
+  .benefit-item:hover { border-color: var(--green-leaf); transform: translateX(6px); }
+  .benefit-check {
+    width: 36px; height: 36px; flex-shrink: 0;
+    background: linear-gradient(135deg, var(--green-fresh), #2e7d32);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; box-shadow: 0 4px 15px rgba(76,175,80,0.3);
+  }
+  .benefit-text strong { display: block; font-size: 0.95rem; margin-bottom: 3px; }
+  .benefit-text small { color: var(--gray-soft); font-size: 0.8rem; }
+
+  .benefits-right {
+    position: relative;
+  }
+  .big-feature-card {
+    background: linear-gradient(135deg, #061a35, #0a2442);
+    border: 1px solid rgba(0,170,255,0.25);
+    border-radius: 28px; padding: 40px;
+    position: relative; overflow: hidden;
+  }
+  .big-feature-card::before {
+    content: ''; position: absolute;
+    top: -80px; right: -80px;
+    width: 250px; height: 250px;
+    background: radial-gradient(circle, rgba(0,170,255,0.15), transparent 70%);
+  }
+  .big-feature-card::after {
+    content: ''; position: absolute;
+    bottom: -60px; left: -60px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(76,175,80,0.1), transparent 70%);
+  }
+  .feature-row {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px; position: relative; z-index: 1;
+  }
+  .feature-box {
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px; padding: 20px 18px; text-align: center;
+    transition: all 0.3s;
+  }
+  .feature-box:hover { background: rgba(0,170,255,0.08); border-color: rgba(0,170,255,0.25); }
+  .feature-box .num {
+    font-family: 'Outfit', sans-serif; font-size: 2.2rem; font-weight: 800;
+    background: linear-gradient(135deg, var(--blue-bright), var(--blue-glow));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .feature-box small { color: var(--gray-soft); font-size: 0.78rem; display: block; margin-top: 4px; }
+
+  .feature-box.green-box .num {
+    background: linear-gradient(135deg, var(--green-fresh), var(--green-leaf));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* ── PRICING ── */
+  #pricing {
+    padding: 120px 5%;
+    background: linear-gradient(180deg, transparent, rgba(0,170,255,0.03), transparent);
+  }
+  .pricing-header { text-align: center; margin-bottom: 70px; }
+
+  .pricing-tabs {
+    display: flex; justify-content: center; gap: 8px; margin-bottom: 48px; flex-wrap: wrap;
+  }
+  .tab-btn {
+    background: var(--surface-card); border: 1px solid var(--border);
+    color: var(--gray-soft); padding: 10px 24px; border-radius: 50px;
+    font-size: 0.88rem; font-weight: 600; cursor: pointer;
+    transition: all 0.3s;
+  }
+  .tab-btn.active, .tab-btn:hover {
+    background: linear-gradient(135deg, rgba(0,170,255,0.25), rgba(0,170,255,0.1));
+    border-color: var(--blue-bright); color: var(--white);
+  }
+
+  .pricing-table {
+    max-width: 900px; margin: 0 auto;
+    display: none;
+  }
+  .pricing-table.active { display: block; }
+
+  .price-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 18px 24px;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.3s;
+  }
+  .price-row:first-child { border-top: 1px solid var(--border); }
+  .price-row:hover { background: rgba(0,170,255,0.04); }
+  .price-name { font-weight: 500; font-size: 0.95rem; }
+  .price-sub { color: var(--gray-soft); font-size: 0.8rem; margin-top: 2px; }
+  .price-val {
+    font-family: 'Outfit', sans-serif; font-size: 1.2rem; font-weight: 700;
+    color: var(--blue-bright); white-space: nowrap;
+  }
+
+  .pricing-note {
+    text-align: center; margin-top: 40px;
+    color: var(--gray-soft); font-size: 0.88rem;
+  }
+  .pricing-note strong { color: var(--white); }
+
+  /* ── GALLERY ── */
+  #gallery { padding: 120px 5%; }
+  .gallery-header { text-align: center; margin-bottom: 60px; }
+
+  .instagram-feed {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+    max-width: 900px; margin: 0 auto;
+  }
+
+  .ig-post {
+    aspect-ratio: 1; position: relative;
+    background: var(--surface-card);
+    border-radius: 4px; overflow: hidden;
+    cursor: pointer;
+  }
+
+  .ig-placeholder {
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 12px; color: var(--gray-soft);
+    background: linear-gradient(135deg, var(--surface-card), var(--surface));
+    transition: all 0.3s;
+  }
+
+  .ig-post:hover .ig-placeholder { background: linear-gradient(135deg, rgba(0,170,255,0.1), var(--surface-card)); }
+
+  .ig-placeholder .emoji { font-size: 2.5rem; }
+  .ig-placeholder span { font-size: 0.75rem; font-weight: 600; letter-spacing: 1px; color: var(--blue-bright); }
+
+  .ig-overlay {
+    position: absolute; inset: 0;
+    background: rgba(0,10,30,0.7);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .ig-post:hover .ig-overlay { opacity: 1; }
+  .ig-overlay span { font-size: 1.5rem; }
+
+  .gallery-cta {
+    text-align: center; margin-top: 40px;
+  }
+
+  /* ── TESTIMONIALS ── */
+  #testimonials { padding: 120px 5%; }
+  .testimonials-header { text-align: center; margin-bottom: 70px; }
+
+  .testimonials-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;
+  }
+
+  .testi-card {
+    background: var(--surface-card); border: 1px solid var(--border);
+    border-radius: 24px; padding: 32px;
+    transition: all 0.3s; position: relative;
+  }
+  .testi-card::before {
+    content: '"'; position: absolute;
+    top: 20px; right: 24px;
+    font-size: 5rem; color: rgba(0,170,255,0.1);
+    font-family: 'Outfit', sans-serif; line-height: 1;
+  }
+  .testi-card:hover { border-color: rgba(0,170,255,0.35); transform: translateY(-4px); }
+
+  .stars { color: #fbbf24; font-size: 0.9rem; margin-bottom: 16px; letter-spacing: 2px; }
+  .testi-text { color: var(--gray-soft); font-size: 0.95rem; line-height: 1.75; margin-bottom: 24px; }
+  .testi-author { display: flex; align-items: center; gap: 14px; }
+  .author-avatar {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--blue-bright), #0056d6);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 1rem; flex-shrink: 0;
+  }
+  .author-name { font-weight: 600; font-size: 0.9rem; }
+  .author-city { color: var(--gray-soft); font-size: 0.78rem; margin-top: 2px; }
+
+  .testi-verified {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 0.7rem; color: var(--green-leaf); font-weight: 600;
+    margin-top: 4px;
+  }
+
+  /* ── CONTACT ── */
+  #contact { padding: 120px 5%; }
+
+  .contact-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start;
+    margin-top: 60px;
+  }
+
+  .contact-info h3 {
+    font-family: 'Outfit', sans-serif; font-size: 1.5rem; font-weight: 700;
+    margin-bottom: 16px;
+  }
+  .contact-info p { color: var(--gray-soft); line-height: 1.8; margin-bottom: 36px; }
+
+  .contact-links { display: flex; flex-direction: column; gap: 16px; }
+  .contact-link {
+    display: flex; align-items: center; gap: 16px;
+    background: var(--surface-card); border: 1px solid var(--border);
+    padding: 18px 22px; border-radius: 16px;
+    text-decoration: none; color: var(--white);
+    transition: all 0.3s;
+  }
+  .contact-link:hover { border-color: var(--blue-bright); transform: translateX(4px); }
+  .contact-link .c-icon {
+    width: 44px; height: 44px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem; flex-shrink: 0;
+  }
+  .c-icon.wa { background: linear-gradient(135deg, #25d366, #128c7e); }
+  .c-icon.ig { background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+  .c-icon.ph { background: linear-gradient(135deg, var(--blue-bright), #0056d6); }
+  .c-icon.web { background: linear-gradient(135deg, var(--blue-glow), var(--blue-bright)); }
+  .contact-link-text strong { display: block; font-size: 0.9rem; margin-bottom: 2px; }
+  .contact-link-text small { color: var(--gray-soft); font-size: 0.8rem; }
+
+  .contact-form {
+    background: var(--surface-card); border: 1px solid var(--border);
+    border-radius: 24px; padding: 40px;
+  }
+  .contact-form h3 {
+    font-family: 'Outfit', sans-serif; font-size: 1.4rem; font-weight: 700;
+    margin-bottom: 28px;
+  }
+  .form-group { margin-bottom: 20px; }
+  .form-group label { display: block; font-size: 0.82rem; font-weight: 600; color: var(--gray-soft); margin-bottom: 8px; letter-spacing: 0.5px; text-transform: uppercase; }
+  .form-group input, .form-group textarea, .form-group select {
+    width: 100%;
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
+    color: var(--white); padding: 14px 18px; border-radius: 12px;
+    font-family: 'DM Sans', sans-serif; font-size: 0.95rem;
+    transition: border-color 0.3s; outline: none;
+    -webkit-appearance: none;
+  }
+  .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+    border-color: var(--blue-bright);
+    background: rgba(0,170,255,0.05);
+  }
+  .form-group textarea { resize: vertical; min-height: 100px; }
+  .form-group select option { background: var(--surface-card); color: white; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  .btn-form {
+    width: 100%;
+    background: linear-gradient(135deg, #00b4d8, #0077b6);
+    color: white; padding: 16px;
+    border-radius: 12px; font-weight: 700; font-size: 1rem;
+    border: none; cursor: pointer; letter-spacing: 0.3px;
+    box-shadow: 0 8px 30px rgba(0,170,255,0.3);
+    transition: all 0.3s; margin-top: 8px;
+    font-family: 'Outfit', sans-serif;
+  }
+  .btn-form:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(0,170,255,0.45); }
+
+  /* ── ZONES ── */
+  .zones-strip {
+    background: var(--surface);
+    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    padding: 28px 5%; overflow: hidden;
+    position: relative;
+  }
+  .zones-inner {
+    display: flex; align-items: center; gap: 0;
+    white-space: nowrap;
+    animation: marquee 20s linear infinite;
+  }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  .zone-item {
+    display: inline-flex; align-items: center; gap: 8px;
+    color: var(--gray-soft); font-size: 0.85rem; font-weight: 500; letter-spacing: 0.5px;
+    padding: 0 32px;
+  }
+  .zone-item::before { content: '📍'; font-size: 0.9rem; }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 60px 5% 40px;
+    border-top: 1px solid var(--border);
+  }
+  .footer-inner {
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 24px;
+    margin-bottom: 40px;
+  }
+  .footer-logo { font-family: 'Outfit', sans-serif; font-size: 1.6rem; font-weight: 800; }
+  .footer-logo span { color: var(--blue-bright); }
+  .footer-logo small { font-size: 0.65rem; color: var(--green-leaf); font-weight: 600; letter-spacing: 2px; display: block; text-transform: uppercase; }
+  .footer-links { display: flex; gap: 28px; flex-wrap: wrap; }
+  .footer-links a { color: var(--gray-soft); text-decoration: none; font-size: 0.85rem; transition: color 0.3s; }
+  .footer-links a:hover { color: var(--white); }
+  .footer-social { display: flex; gap: 12px; }
+  .social-btn {
+    width: 40px; height: 40px; border-radius: 10px;
+    background: var(--surface-card); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    text-decoration: none; font-size: 1rem;
+    transition: all 0.3s; color: var(--white);
+  }
+  .social-btn:hover { border-color: var(--blue-bright); background: rgba(0,170,255,0.1); transform: translateY(-2px); }
+
+  .footer-bottom {
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
+    padding-top: 24px; border-top: 1px solid var(--border);
+  }
+  .footer-bottom p { color: var(--gray-soft); font-size: 0.8rem; }
+  .footer-tagline { color: var(--blue-bright); font-size: 0.78rem; font-weight: 600; letter-spacing: 1px; }
+
+  /* ── WHATSAPP FLOAT ── */
+  .wa-float {
+    position: fixed; bottom: 32px; right: 32px; z-index: 999;
+    width: 60px; height: 60px; border-radius: 50%;
+    background: linear-gradient(135deg, #25d366, #128c7e);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.6rem; text-decoration: none; color: white;
+    box-shadow: 0 8px 30px rgba(37,211,102,0.4);
+    transition: all 0.3s;
+    animation: pulse-wa 3s ease-in-out infinite;
+  }
+  .wa-float:hover { transform: scale(1.1); box-shadow: 0 12px 40px rgba(37,211,102,0.55); }
+  @keyframes pulse-wa {
+    0%, 100% { box-shadow: 0 8px 30px rgba(37,211,102,0.4); }
+    50% { box-shadow: 0 8px 40px rgba(37,211,102,0.7); }
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeInRight { from { opacity: 0; transform: translateX(40px); } to { opacity: 1; transform: translateX(0); } }
+
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .nav-links { display: none; flex-direction: column; position: fixed; top: 80px; left: 0; right: 0; background: rgba(10,22,40,0.97); padding: 30px 5%; gap: 20px; border-bottom: 1px solid var(--border); }
+    .nav-links.open { display: flex; }
+    .hamburger { display: flex; }
+    .hero-visual { display: none; }
+    .hero-title { font-size: 2.8rem; }
+    .about-grid, .benefits-layout, .contact-grid { grid-template-columns: 1fr; gap: 48px; }
+    .instagram-feed { grid-template-columns: repeat(3, 1fr); }
+    .services-grid { grid-template-columns: 1fr; }
+    .hero-stats { gap: 24px; }
+  }
+
+  @media (max-width: 600px) {
+    .hero-title { font-size: 2.2rem; }
+    .hero-actions { flex-direction: column; }
+    .btn-primary, .btn-secondary { justify-content: center; }
+    .about-features { grid-template-columns: 1fr; }
+    .feature-row { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .footer-inner { flex-direction: column; align-items: flex-start; }
+    .instagram-feed { grid-template-columns: repeat(2, 1fr); }
+    .pricing-tabs { gap: 6px; }
+    .tab-btn { font-size: 0.78rem; padding: 8px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">
+    <img src="data:image/png;base64,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" alt="Froster Spa Logo">
+    <div>
+      FROST<span>ER</span>
+      <small>SPA</small>
+    </div>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#about">Nosotros</a></li>
+    <li><a href="#services">Servicios</a></li>
+    <li><a href="#pricing">Precios</a></li>
+    <li><a href="#gallery">Galería</a></li>
+    <li><a href="#testimonials">Testimonios</a></li>
+    <li><a href="#contact" class="nav-cta">Agendar</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-orb-1"></div>
+  <div class="hero-orb-2"></div>
+
+  <div class="hero-content">
+    <div class="hero-badge">Servicio a domicilio disponible</div>
+    <h1 class="hero-title">
+      Limpieza profunda<br>
+      que <span class="accent">renueva</span><br>
+      tu <span class="green">hogar</span>
+    </h1>
+    <p class="hero-subtitle">
+      Sanitización con vapor de alta temperatura. Eliminamos ácaros, bacterias, hongos y malos olores de tus muebles, colchones y alfombras. Resultados visibles desde la primera sesión.
+    </p>
+    <div class="hero-actions">
+      <a href="https://wa.me/56997550446?text=Hola!%20Me%20gustar%C3%ADa%20agendar%20una%20limpieza" class="btn-primary" target="_blank">
+        📅 Agenda tu limpieza hoy
+      </a>
+      <a href="#services" class="btn-secondary">
+        Ver servicios →
+      </a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">500+</div>
+        <div class="stat-label">Clientes satisfechos</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">99%</div>
+        <div class="stat-label">Tasa de satisfacción</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Eco-amigable</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="hero-visual-card">
+      <span class="big-snowflake">❄️</span>
+      <div class="pill-tags">
+        <span class="pill-tag">Vapor a alta temp.</span>
+        <span class="pill-tag green">Eco-amigable</span>
+        <span class="pill-tag">A domicilio</span>
+        <span class="pill-tag green">Sin químicos tóxicos</span>
+        <span class="pill-tag">Sanitización real</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ZONES MARQUEE -->
+<div class="zones-strip">
+  <div class="zones-inner">
+    <span class="zone-item">Villarrica</span>
+    <span class="zone-item">Pucón</span>
+    <span class="zone-item">Lican Ray</span>
+    <span class="zone-item">Panguipulli</span>
+    <span class="zone-item">Loncoche</span>
+    <span class="zone-item">y alrededores</span>
+    <span class="zone-item">Villarrica</span>
+    <span class="zone-item">Pucón</span>
+    <span class="zone-item">Lican Ray</span>
+    <span class="zone-item">Panguipulli</span>
+    <span class="zone-item">Loncoche</span>
+    <span class="zone-item">y alrededores</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label reveal">Sobre nosotros</div>
+  <h2 class="section-title reveal">Limpieza que va más <span class="accent">allá</span><br>de lo <span class="green">visible</span></h2>
+
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <p>
+        <strong>Froster</strong> nació con una misión clara: llevar la limpieza profesional de nivel industrial directamente a tu hogar. No somos una empresa de limpieza convencional — somos especialistas en sanitización real.
+      </p>
+      <p>
+        Utilizamos vapor a alta temperatura como método principal, lo que nos permite eliminar <strong>virus, bacterias, hongos, ácaros y malos olores</strong> sin dañar las fibras de tus tapices ni usar químicos agresivos para tu familia.
+      </p>
+      <p>
+        Complementamos con <strong>detergentes 100% biodegradables</strong> para manchas específicas, y ofrecemos tratamiento especial para orina de mascotas. Trabajamos con rapidez, responsabilidad y resultados visibles.
+      </p>
+      <div class="about-features">
+        <div class="feat-item">
+          <span class="feat-icon">🔥</span>
+          <div class="feat-text">
+            <strong>Vapor profesional</strong>
+            <small>Alta temperatura que elimina todo</small>
+          </div>
+        </div>
+        <div class="feat-item">
+          <span class="feat-icon">🌿</span>
+          <div class="feat-text">
+            <strong>Eco-amigable</strong>
+            <small>Detergentes biodegradables</small>
+          </div>
+        </div>
+        <div class="feat-item">
+          <span class="feat-icon">🏠</span>
+          <div class="feat-text">
+            <strong>A domicilio</strong>
+            <small>Nos desplazamos hasta ti</small>
+          </div>
+        </div>
+        <div class="feat-item">
+          <span class="feat-icon">⚡</span>
+          <div class="feat-text">
+            <strong>Resultados rápidos</strong>
+            <small>Visible desde la primera sesión</small>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="about-visual reveal">
+      <div class="about-card">
+        <span class="icon">🦠</span>
+        <strong>Elimina microorganismos</strong>
+        <small>El vapor a alta temperatura destruye bacterias, virus, hongos y ácaros que no se ven a simple vista</small>
+      </div>
+      <div class="about-card">
+        <span class="icon">🐾</span>
+        <strong>Trat. mascotas</strong>
+        <small>Tratamiento especial para manchas y olores de orina de mascotas</small>
+      </div>
+      <div class="about-card">
+        <span class="icon">✨</span>
+        <strong>Tapices renovados</strong>
+        <small>Tus muebles quedan como nuevos sin dañar las fibras ni los colores</small>
+      </div>
+      <div class="about-card">
+        <span class="icon">🛡️</span>
+        <strong>Garantía de calidad</strong>
+        <small>Nos aseguramos de que quedes 100% satisfecho con el resultado</small>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="services-header">
+    <div class="section-label reveal" style="justify-content:center">Nuestros servicios</div>
+    <h2 class="section-title reveal">Todo lo que necesitas para un<br>hogar <span class="accent">más limpio</span> y <span class="green">saludable</span></h2>
+    <p style="color:var(--gray-soft);max-width:520px;margin:0 auto;font-size:1rem;line-height:1.7" class="reveal">
+      Ofrecemos limpieza especializada con vapor para cada rincón de tu hogar. Cada servicio está diseñado para dar resultados profesionales.
+    </p>
+  </div>
+
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <div class="service-icon-wrap">🛋️</div>
+      <h3>Sillones y sofás</h3>
+      <p>Limpieza profunda de sillones de 1, 2 y 3 cuerpos. Incluimos sillones tipo L. Eliminamos suciedad incrustada, manchas y olores con vapor.</p>
+      <span class="service-tag">✓ SERVICIO ESTRELLA</span>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon-wrap">🛏️</div>
+      <h3>Colchones</h3>
+      <p>Sanitización completa de colchones de 1 plaza hasta Super King. Eliminamos ácaros, bacterias y malos olores para que descanses mejor.</p>
+      <span class="service-tag">✓ MÁS SOLICITADO</span>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon-wrap">🪑</div>
+      <h3>Sillas de comedor</h3>
+      <p>Limpiamos la base, respaldo y sitiales/poltronas. Perfectas para después de eventos o mantenimiento regular del comedor familiar.</p>
+      <span class="service-tag">✓ PRECIO ESPECIAL</span>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon-wrap">🏠</div>
+      <h3>Alfombras decorativas</h3>
+      <p>Retiro y entrega gratuito. Limpieza de alfombras pequeñas hasta 2x3 metros. Colores renovados y fibras libres de alérgenos.</p>
+      <span class="service-tag">✓ RETIRO GRATIS</span>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon-wrap">📐</div>
+      <h3>Alfombras muro a muro</h3>
+      <p>Limpieza de cubrepiso por metro cuadrado. Ideal para oficinas, salas de estar y habitaciones con alfombrado completo.</p>
+      <span class="service-tag">✓ PRECIO POR M²</span>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon-wrap">🚗</div>
+      <h3>Tapices de autos</h3>
+      <p>Limpieza interior completa incluyendo tapiz. Disponible para city cars, SUV y vehículos de 8 pasajeros. Resultados profesionales.</p>
+      <span class="service-tag">✓ SERVICIO COMPLETO</span>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon-wrap">💨</div>
+      <h3>Sanitización con vapor</h3>
+      <p>Tratamiento especializado de sanitización con vapor a alta temperatura. Elimina el 99.9% de microorganismos sin químicos agresivos.</p>
+      <span class="service-tag">✓ SALUD FAMILIAR</span>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon-wrap">🌿</div>
+      <h3>Tratamiento eco-amigable</h3>
+      <p>Usamos únicamente productos biodegradables. Sin residuos tóxicos, seguro para niños, mascotas y personas con alergias.</p>
+      <span class="service-tag">✓ CERTIFICADO VERDE</span>
+    </div>
+  </div>
+</section>
+
+<!-- BENEFITS -->
+<section id="benefits">
+  <div class="benefits-layout">
+    <div class="benefits-left reveal">
+      <div class="section-label">Beneficios</div>
+      <h2 class="section-title">Por qué elegir<br><span class="accent">Froster</span></h2>
+      <p>No es solo limpiar. Es crear ambientes más saludables donde tu familia pueda vivir mejor. Cada servicio está pensado para darte el mayor beneficio posible.</p>
+      <div class="benefits-list">
+        <div class="benefit-item">
+          <div class="benefit-check">✓</div>
+          <div class="benefit-text">
+            <strong>Elimina ácaros y bacterias</strong>
+            <small>Vapor a alta temperatura destruye microorganismos invisibles al ojo</small>
+          </div>
+        </div>
+        <div class="benefit-item">
+          <div class="benefit-check">✓</div>
+          <div class="benefit-text">
+            <strong>Sin olores desagradables</strong>
+            <small>Eliminación completa de olores a mascota, humedad y cocina</small>
+          </div>
+        </div>
+        <div class="benefit-item">
+          <div class="benefit-check">✓</div>
+          <div class="benefit-text">
+            <strong>Mayor durabilidad de tus muebles</strong>
+            <small>La limpieza regular extiende la vida útil de tus tapices</small>
+          </div>
+        </div>
+        <div class="benefit-item">
+          <div class="benefit-check">✓</div>
+          <div class="benefit-text">
+            <strong>Ambiente más saludable</strong>
+            <small>Reduce alérgenos, ideal para niños, adultos mayores y mascotas</small>
+          </div>
+        </div>
+        <div class="benefit-item">
+          <div class="benefit-check">✓</div>
+          <div class="benefit-text">
+            <strong>Rápido y sin complicaciones</strong>
+            <small>Llegamos a tu hogar, hacemos el trabajo y nos vamos. Así de simple.</small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="benefits-right reveal">
+      <div class="big-feature-card">
+        <div class="feature-row">
+          <div class="feature-box">
+            <div class="num">99.9%</div>
+            <small>Bacterias eliminadas con vapor</small>
+          </div>
+          <div class="feature-box green-box">
+            <div class="num">100%</div>
+            <small>Productos eco-amigables</small>
+          </div>
+          <div class="feature-box">
+            <div class="num">+500</div>
+            <small>Clientes en la región</small>
+          </div>
+          <div class="feature-box green-box">
+            <div class="num">5★</div>
+            <small>Calificación promedio</small>
+          </div>
+        </div>
+        <div style="margin-top:28px;padding:24px;background:rgba(255,255,255,0.03);border-radius:16px;border:1px solid rgba(255,255,255,0.07);">
+          <p style="color:var(--gray-soft);font-size:0.88rem;line-height:1.8;margin:0;">
+            <strong style="color:var(--white);">¿Por qué el vapor?</strong><br>
+            El vapor a alta temperatura (entre 100°C y 180°C) es uno de los métodos más efectivos y naturales para la sanitización. No requiere productos químicos agresivos, penetra en las fibras del tapiz y elimina lo que los métodos convencionales no pueden alcanzar.
+          </p>
+        </div>
+        <div style="margin-top:16px;display:flex;gap:12px;flex-wrap:wrap;">
+          <span style="background:rgba(0,170,255,0.1);border:1px solid rgba(0,170,255,0.2);padding:8px 16px;border-radius:50px;font-size:0.78rem;color:var(--blue-glow);font-weight:600;">🔥 Alta temperatura</span>
+          <span style="background:rgba(76,175,80,0.1);border:1px solid rgba(76,175,80,0.2);padding:8px 16px;border-radius:50px;font-size:0.78rem;color:var(--green-leaf);font-weight:600;">🌿 Sin tóxicos</span>
+          <span style="background:rgba(0,170,255,0.1);border:1px solid rgba(0,170,255,0.2);padding:8px 16px;border-radius:50px;font-size:0.78rem;color:var(--blue-glow);font-weight:600;">✨ Resultados visibles</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="pricing-header">
+    <div class="section-label reveal" style="justify-content:center">Precios</div>
+    <h2 class="section-title reveal">Servicios y <span class="accent">precios</span><br>temporada <span class="green">baja</span></h2>
+    <p style="color:var(--gray-soft);max-width:500px;margin:16px auto 0;font-size:0.95rem;line-height:1.7" class="reveal">
+      Precios claros, sin sorpresas. Consulta por descuentos para múltiples servicios o combos.
+    </p>
+  </div>
+
+  <div class="pricing-tabs reveal">
+    <button class="tab-btn active" onclick="showTab('colchones')">🛏️ Colchones</button>
+    <button class="tab-btn" onclick="showTab('sillas')">🪑 Sillas</button>
+    <button class="tab-btn" onclick="showTab('sillones')">🛋️ Sillones</button>
+    <button class="tab-btn" onclick="showTab('alfombras')">🏠 Alfombras</button>
+    <button class="tab-btn" onclick="showTab('autos')">🚗 Autos</button>
+  </div>
+
+  <div class="pricing-table active" id="tab-colchones">
+    <div class="price-row">
+      <div><div class="price-name">1 Plaza</div></div>
+      <div class="price-val">$ 16.000</div>
+    </div>
+    <div class="price-row">
+      <div><div class="price-name">1,5 Plaza</div></div>
+      <div class="price-val">$ 19.000</div>
+    </div>
+    <div class="price-row">
+      <div><div class="price-name">2 Plazas</div></div>
+      <div class="price-val">$ 25.000</div>
+    </div>
+    <div class="price-row">
+      <div><div class="price-name">King</div></div>
+      <div class="price-val">$ 29.000</div>
+    </div>
+    <div class="price-row">
+      <div><div class="price-name">Super King / Queen</div></div>
+      <div class="price-val">$ 30.000</div>
+    </div>
+  </div>
+
+  <div class="pricing-table" id="tab-sillas">
+    <div class="price-row">
+      <div><div class="price-name">Base</div></div>
+      <div class="price-val">$ 5.000</div>
+    </div>
+    <div class="price-row">
+      <div><div class="price-name">Base y respaldo</div></div>
+      <div class="price-val">$ 7.000</div>
+    </div>
+    <div class="price-row">
+      <div><div class="price-name">Sitial / Poltrona</div></div>
+      <div class="price-val">$ 12.000</div>
+    </div>
+    <div class="price-row">
+      <div><div class="price-name">Futón</div></div>
+      <div class="price-val">$ 25.000</div>
+    </div>
+  </div>
+
+  <div class="pricing-table" id="tab-sillones">
+    <div class="price-row">
+      <div><div class="price-name">1 Cuerpo</div></div>
+      <div class="price-val">$ 19.000</div>
+    </div>
+    <div class="price-row">
+      <div><div class="price-name">2 Cuerpos</div></div>
+      <div class="price-val">$ 29.000</div>
+    </div>
+    <div class="price-row">
+      <div><div class="price-name">3 Cuerpos</div></div>
+      <div class="price-val">$ 33.000</div>
+    </div>
+    <div class="price-row">
+      <div><div class="price-name">Sillón L</div><div class="price-sub">Precio desde</div></div>
+      <div class="price-val">$ 40.000</div>
+    </div>
+  </div>
+
+  <div class="pricing-table" id="tab-alfombras">
+    <div class="price-row">
+      <div><div class="price-name">Cubre piso</div><div class="price-sub">Por metro cuadrado</div></div>
+      <div class="price-val">$ 3.000 / m²</div>
+    </div>
+    <div class="price-row">
+      <div><div class="price-name">Decorativa pequeña</div><div class="price-sub">Retiro y entrega gratuito</div></div>
+      <div class="price-val">$ 10.000</div>
+    </div>
+    <div class="price-row">
+      <div><div class="price-name">Decorativa 1,2 × 1,6 m</div><div class="price-sub">Retiro y entrega gratuito</div></div>
+      <div class="price-val">$ 17.000</div>
+    </div>
+    <div class="price-row">
+      <div><div class="price-name">Decorativa 1,6 × 2,2 m</div><div class="price-sub">Retiro y entrega gratuito</div></div>
+      <div class="price-val">$ 23.000</div>
+    </div>
+    <div class="price-row">
+      <div><div class="price-name">Decorativa 2 × 3 m</div><div class="price-sub">Retiro y entrega gratuito</div></div>
+      <div class="price-val">$ 27.000</div>
+    </div>
+  </div>
+
+  <div class="pricing-table" id="tab-autos">
+    <div class="price-row">
+      <div><div class="price-name">5 pasajeros – City Car</div><div class="price-sub">Limpieza tapiz + interior</div></div>
+      <div class="price-val">$ 49.000</div>
+    </div>
+    <div class="price-row">
+      <div><div class="price-name">5 pasajeros – SUV</div><div class="price-sub">Limpieza tapiz + interior</div></div>
+      <div class="price-val">$ 54.000</div>
+    </div>
+    <div class="price-row">
+      <div><div class="price-name">8 pasajeros (3 filas)</div><div class="price-sub">Limpieza tapiz + interior</div></div>
+      <div class="price-val">$ 65.000</div>
+    </div>
+  </div>
+
+  <p class="pricing-note reveal">
+    📍 Servicio a domicilio en <strong>Villarrica, Pucón, Lican Ray, Panguipulli, Loncoche y más.</strong><br>
+    Consulta por combos y descuentos especiales. <a href="https://wa.me/56997550446" target="_blank" style="color:var(--blue-bright);text-decoration:none;font-weight:600;">Contáctanos por WhatsApp →</a>
+  </p>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="gallery-header">
+    <div class="section-label reveal" style="justify-content:center">Galería</div>
+    <h2 class="section-title reveal">Nuestro trabajo<br><span class="accent">habla</span> por nosotros</h2>
+    <p style="color:var(--gray-soft);max-width:480px;margin:16px auto 0;font-size:0.95rem;line-height:1.7" class="reveal">
+      Resultados reales de clientes reales. Síguenos en Instagram para ver más trabajos.
+    </p>
+  </div>
+
+  <div class="instagram-feed reveal">
+    <div class="ig-post">
+      <div class="ig-placeholder">
+        <span class="emoji">🛋️</span>
+        <span>ANTES / DESPUÉS</span>
+      </div>
+      <div class="ig-overlay"><span>❤️ Ver en Instagram</span></div>
+    </div>
+    <div class="ig-post">
+      <div class="ig-placeholder">
+        <span class="emoji">🛏️</span>
+        <span>COLCHÓN RENOVADO</span>
+      </div>
+      <div class="ig-overlay"><span>❤️ Ver en Instagram</span></div>
+    </div>
+    <div class="ig-post">
+      <div class="ig-placeholder">
+        <span class="emoji">🏠</span>
+        <span>ALFOMBRA LIMPIA</span>
+      </div>
+      <div class="ig-overlay"><span>❤️ Ver en Instagram</span></div>
+    </div>
+    <div class="ig-post">
+      <div class="ig-placeholder">
+        <span class="emoji">🚗</span>
+        <span>TAPIZ AUTO</span>
+      </div>
+      <div class="ig-overlay"><span>❤️ Ver en Instagram</span></div>
+    </div>
+    <div class="ig-post">
+      <div class="ig-placeholder">
+        <span class="emoji">💨</span>
+        <span>VAPOR EN ACCIÓN</span>
+      </div>
+      <div class="ig-overlay"><span>❤️ Ver en Instagram</span></div>
+    </div>
+    <div class="ig-post">
+      <div class="ig-placeholder">
+        <span class="emoji">✨</span>
+        <span>RESULTADO FINAL</span>
+      </div>
+      <div class="ig-overlay"><span>❤️ Ver en Instagram</span></div>
+    </div>
+  </div>
+
+  <div class="gallery-cta reveal">
+    <a href="https://instagram.com/frosterspa" target="_blank" class="btn-secondary" style="display:inline-flex;margin-top:12px;">
+      📸 Ver más en @frosterspa
+    </a>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="testimonials-header">
+    <div class="section-label reveal" style="justify-content:center">Testimonios</div>
+    <h2 class="section-title reveal">Lo que dicen nuestros<br><span class="accent">clientes</span></h2>
+  </div>
+
+  <div class="testimonials-grid">
+    <div class="testi-card reveal">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">Quedé impresionada con el resultado. Mi colchón parecía nuevo y el olor desapareció completamente. El equipo fue muy puntual y profesional. Lo recomiendo al 100%.</p>
+      <div class="testi-author">
+        <div class="author-avatar">M</div>
+        <div>
+          <div class="author-name">María González</div>
+          <div class="author-city">📍 Villarrica</div>
+          <div class="testi-verified">✓ Cliente verificado</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card reveal">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">Tenía un sillón con manchas de café que parecían permanentes. Froster lo dejó como recién comprado. El precio justo y el servicio excelente. Ya los contraté de nuevo.</p>
+      <div class="testi-author">
+        <div class="author-avatar">C</div>
+        <div>
+          <div class="author-name">Carlos Muñoz</div>
+          <div class="author-city">📍 Pucón</div>
+          <div class="testi-verified">✓ Cliente verificado</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card reveal">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">Mi hijo tiene alergia a los ácaros y desde que hacemos limpieza con Froster, sus síntomas mejoraron notablemente. Súper recomendados para familias con niños o mascotas.</p>
+      <div class="testi-author">
+        <div class="author-avatar">A</div>
+        <div>
+          <div class="author-name">Andrea Soto</div>
+          <div class="author-city">📍 Lican Ray</div>
+          <div class="testi-verified">✓ Cliente verificado</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card reveal">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">El tapiz de mi auto quedó increíble. Tenía manchas viejas y olor a mascota. Llegaron puntuales y trabajaron de forma muy prolija. Vale completamente la pena.</p>
+      <div class="testi-author">
+        <div class="author-avatar">R</div>
+        <div>
+          <div class="author-name">Roberto Fernández</div>
+          <div class="author-city">📍 Panguipulli</div>
+          <div class="testi-verified">✓ Cliente verificado</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card reveal">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">Contraté la limpieza de 3 colchones y todas las sillas del comedor. El resultado fue increíble y el precio muy conveniente. Los voy a recomendar a toda mi familia.</p>
+      <div class="testi-author">
+        <div class="author-avatar">P</div>
+        <div>
+          <div class="author-name">Paula Contreras</div>
+          <div class="author-city">📍 Villarrica</div>
+          <div class="testi-verified">✓ Cliente verificado</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card reveal">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">Me encantó que usaran productos ecológicos. Tengo bebé en casa y me preocupaba eso. Quedé muy tranquila y el sillón quedó impecable. Profesionalismo total.</p>
+      <div class="testi-author">
+        <div class="author-avatar">V</div>
+        <div>
+          <div class="author-name">Valentina Rojas</div>
+          <div class="author-city">📍 Pucón</div>
+          <div class="testi-verified">✓ Cliente verificado</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label reveal">Contacto</div>
+  <h2 class="section-title reveal">Agenda tu <span class="accent">limpieza</span><br>hoy mismo</h2>
+
+  <div class="contact-grid">
+    <div class="contact-info reveal">
+      <h3>¿Listo para un hogar más limpio?</h3>
+      <p>Contáctanos por el medio que prefieras. Respondemos rápido y coordinamos la visita a tu conveniencia. Atendemos en Villarrica, Pucón, Lican Ray y alrededores.</p>
+
+      <div class="contact-links">
+        <a href="https://wa.me/56997550446?text=Hola!%20Me%20gustar%C3%ADa%20agendar%20una%20limpieza" class="contact-link" target="_blank">
+          <div class="c-icon wa">💬</div>
+          <div class="contact-link-text">
+            <strong>WhatsApp</strong>
+            <small>+56 9 9755 0446 — Respuesta rápida</small>
+          </div>
+        </a>
+        <a href="https://instagram.com/frosterspa" class="contact-link" target="_blank">
+          <div class="c-icon ig">📸</div>
+          <div class="contact-link-text">
+            <strong>Instagram</strong>
+            <small>@frosterspa — Ve nuestros trabajos</small>
+          </div>
+        </a>
+        <a href="tel:+56997550446" class="contact-link">
+          <div class="c-icon ph">📞</div>
+          <div class="contact-link-text">
+            <strong>Teléfono</strong>
+            <small>+56 9 9755 0446</small>
+          </div>
+        </a>
+        <a href="https://froster.cl" class="contact-link" target="_blank">
+          <div class="c-icon web">🌐</div>
+          <div class="contact-link-text">
+            <strong>Sitio web</strong>
+            <small>froster.cl</small>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="contact-form reveal">
+      <h3>Envíanos un mensaje</h3>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Nombre</label>
+          <input type="text" placeholder="Tu nombre">
+        </div>
+        <div class="form-group">
+          <label>Teléfono</label>
+          <input type="tel" placeholder="+56 9 XXXX XXXX">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Servicio de interés</label>
+        <select>
+          <option value="">Selecciona un servicio</option>
+          <option>Limpieza de sillones</option>
+          <option>Limpieza de colchones</option>
+          <option>Sillas de comedor</option>
+          <option>Alfombras decorativas</option>
+          <option>Alfombras muro a muro</option>
+          <option>Tapiz de auto</option>
+          <option>Sanitización con vapor</option>
+          <option>Múltiples servicios</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Ciudad</label>
+        <select>
+          <option value="">¿Dónde te ubicas?</option>
+          <option>Villarrica</option>
+          <option>Pucón</option>
+          <option>Lican Ray</option>
+          <option>Panguipulli</option>
+          <option>Loncoche</option>
+          <option>Otro</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Mensaje (opcional)</label>
+        <textarea placeholder="Cuéntanos qué necesitas limpiar..."></textarea>
+      </div>
+      <button class="btn-form" onclick="sendWA()">💬 Enviar por WhatsApp</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">
+      FROST<span>ER</span>
+      <small>Limpieza y Sanitización con Vapor</small>
+    </div>
+    <div class="footer-links">
+      <a href="#about">Nosotros</a>
+      <a href="#services">Servicios</a>
+      <a href="#pricing">Precios</a>
+      <a href="#gallery">Galería</a>
+      <a href="#testimonials">Testimonios</a>
+      <a href="#contact">Contacto</a>
+    </div>
+    <div class="footer-social">
+      <a href="https://wa.me/56997550446" class="social-btn" target="_blank">💬</a>
+      <a href="https://instagram.com/frosterspa" class="social-btn" target="_blank">📸</a>
+      <a href="tel:+56997550446" class="social-btn">📞</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Froster Spa · Todos los derechos reservados</p>
+    <p>📍 Villarrica · Pucón · Lican Ray · Panguipulli · Loncoche</p>
+    <p class="footer-tagline">RÁPIDO · SEGURO · CONFIABLE</p>
+  </div>
+</footer>
+
+<!-- WhatsApp Float Button -->
+<a href="https://wa.me/56997550446?text=Hola!%20Me%20gustar%C3%ADa%20agendar%20una%20limpieza" class="wa-float" target="_blank" title="Escríbenos por WhatsApp">💬</a>
+
+<script>
+  // Nav scroll effect
+  window.addEventListener('scroll', () => {
+    const nav = document.getElementById('navbar');
+    if (window.scrollY > 50) {
+      nav.style.background = 'rgba(10,22,40,0.97)';
+    } else {
+      nav.style.background = 'rgba(10,22,40,0.85)';
+    }
+  });
+
+  // Mobile menu
+  function toggleMenu() {
+    document.getElementById('navLinks').classList.toggle('open');
+  }
+
+  // Close menu on link click
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open'));
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(r => observer.observe(r));
+
+  // Pricing tabs
+  function showTab(id) {
+    document.querySelectorAll('.pricing-table').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+    event.target.classList.add('active');
+  }
+
+  // WhatsApp form
+  function sendWA() {
+    const name = document.querySelector('input[type=text]').value || 'Sin nombre';
+    const phone = document.querySelector('input[type=tel]').value || 'Sin teléfono';
+    const selects = document.querySelectorAll('select');
+    const service = selects[0].value || 'Sin especificar';
+    const city = selects[1].value || 'Sin especificar';
+    const msg = document.querySelector('textarea').value || '';
+    const text = encodeURIComponent(`Hola Froster! Me llamo ${name}.\n📱 Tel: ${phone}\n🛋️ Servicio: ${service}\n📍 Ciudad: ${city}${msg ? '\n💬 ' + msg : ''}`);
+    window.open('https://wa.me/56997550446?text=' + text, '_blank');
+  }
+
+  // Smooth scroll for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+</script>
+
+</body>
+</html>
